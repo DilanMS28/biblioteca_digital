@@ -17,8 +17,8 @@ export default function page() {
                                 <p className="text-slate-600 text-lg leading-relaxed">Nuestra misión es proporcionar a cada estudiante acceso ilimitado a un mundo de información, fomentando el amor por la lectura y la investigación en la era digital. Creemos que el conocimiento debe ser libre, accesible y emocionante</p>
                             </div>
                             <div className="flex gap-4 mt-8">
-                                <button className="text-white font-bold bg-blue-400 hover:bg-blue-500 p-4 rounded-4xl cursor-pointer">Explorar Catálogo</button>
-                                <button className=" text-blue-400 font-bold border-2 border-blue-400 p-4 rounded-4xl cursor-pointer">Leer Más</button>
+                                <button className="text-white font-bold bg-blue-400 hover:bg-blue-500 px-6 py-3 rounded-4xl cursor-pointer">Explorar Catálogo</button>
+                                <button className=" text-blue-400 font-bold border-2 border-blue-400 px-6 py-3 rounded-4xl cursor-pointer">Leer Más</button>
                             </div>
                         </div>
                     </div>
