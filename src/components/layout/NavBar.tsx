@@ -40,7 +40,7 @@ export default function NavBar() {
                             onClick={() => setOpen(prevOpen => !prevOpen)}
                             className="text-blue-400 text-3xl focus:outline-none"
                         >
-                            <i className="bi bi-list"></i>
+                            <i className="bi bi-list text-5xl"></i>
                         </button>
                     </div>
                 </div>
