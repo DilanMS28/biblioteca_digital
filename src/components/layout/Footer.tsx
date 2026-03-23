@@ -11,7 +11,7 @@ export default function Footer() {
                 <div className="flex flex-col justify-between items-center lg:flex-row gap-12">
                     <div className="">
                         <h4 className="font-bold text-white text-2xl">Accesos Rápidos</h4>
-                        <nav className="flex flex-col gap-2 ">
+                        <nav className="flex flex-col gap-2 text-center lg:text-left">
                             <Link href="/" className="text-lg my-2">Inicio</Link>
                             <Link href="/" className="text-lg my-2">Biblioteca</Link>
                             <Link href="/about" className="text-lg my-2">Nosotros</Link>
