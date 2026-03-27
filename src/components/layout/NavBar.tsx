@@ -30,7 +30,7 @@ export default function NavBar() {
 
                     {/* Desktop Login */}
                     <div className="hidden md:block">
-                        <Link href="#" className="shadow-lg text-white font-bold bg-blue-400 hover:bg-blue-500 px-6 py-3 rounded-4xl cursor-pointer">Iniciar Sesión</Link>
+                        <Link href="/auth/login" className="shadow-lg text-white font-bold bg-blue-400 hover:bg-blue-500 px-6 py-3 rounded-4xl cursor-pointer">Iniciar Sesión</Link>
                     </div>
 
                     {/* Hamburger Icon (mobile) */}
@@ -54,7 +54,7 @@ export default function NavBar() {
                         <Link href="/" className="text-center text-lg font-semibold text-blue-400 hover:text-blue-500 py-2 px-1">Inicio</Link>
                         <Link href="/" className="text-center text-lg font-semibold text-blue-400 hover:text-blue-500 py-2 px-1">Biblioteca</Link>
                         <Link href="/about" className="text-center text-lg font-semibold text-blue-400 hover:text-blue-500 py-2 px-1">Nosotros</Link>
-                        <Link href="#" className="text-center mt-3 shadow-lg text-white font-bold bg-blue-400 hover:bg-blue-500 px-6 py-3 rounded-4xl cursor-pointer w-fit">Iniciar Sesión</Link>
+                        <Link href="/auth/login" className="text-center mt-3 shadow-lg text-white font-bold bg-blue-400 hover:bg-blue-500 px-6 py-3 rounded-4xl cursor-pointer w-fit">Iniciar Sesión</Link>
                     </nav>
                 </div>
             </div>
