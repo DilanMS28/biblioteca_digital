@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ToastContainer } from "react-toastify";
 
 
 export default function LoginForm() {
@@ -15,14 +17,14 @@ export default function LoginForm() {
                     <label className="text-xs font-semibold text-gray-500 mb-2 block uppercase tracking-wider">Seleccionar Rol</label>
                     <div className="flex gap-3">
                         <label className="flex-1 cursor-pointer">
-                            <input type="radio" name="role" value="estudiante" defaultChecked  className="hidden peer"/>
+                            <input type="radio" name="role" value="estudiante" defaultChecked className="hidden peer" />
                             <div className="border-2 border-gray-200 text-gray-600 font-semibold rounded-xl px-4 py-2 flex flex-col items-center gap-1 bg-gray-50 hover:border-blue-400 peer-checked:border-blue-400 peer-checked:bg-blue-50 transition">
                                 <i className="bi bi-mortarboard-fill text-xl mb-1"></i>
                                 Estudiante
                             </div>
                         </label>
                         <label className="flex-1 cursor-pointer">
-                            <input type="radio"  name="role" value="profesor"  className="hidden peer" />
+                            <input type="radio" name="role" value="profesor" className="hidden peer" />
                             <div className="border-2 border-gray-200 text-gray-600 font-semibold rounded-xl px-4 py-2 flex flex-col items-center gap-1 bg-gray-50 hover:border-blue-400 peer-checked:border-blue-400 peer-checked:bg-blue-50 transition">
                                 <i className="bi bi-person-badge text-xl mb-1"></i>
                                 Profesor
@@ -30,7 +32,7 @@ export default function LoginForm() {
                         </label>
 
                         <label className="flex-1 cursor-pointer">
-                            <input type="radio" name="role" value="admin"  className="hidden peer" />
+                            <input type="radio" name="role" value="admin" className="hidden peer" />
                             <div className="border-2 border-gray-200 text-gray-600 font-semibold rounded-xl px-4 py-2 flex flex-col items-center gap-1 bg-gray-50 hover:border-blue-400 peer-checked:border-blue-400 peer-checked:bg-blue-50 transition">
                                 <i className="bi bi-shield-lock text-xl mb-1"></i>
                                 Admin
@@ -81,6 +83,13 @@ export default function LoginForm() {
 
                 </div>
             </div>
+
+            <div className="flex justify-center items-center my-5">
+                <label className="flex items-center text-sm text-slate-600 gap-1">No tienes una cuenta?
+                    <Link className="text-blue-400 text-sm font-semibold hover:underline cursor-pointer" href="/auth/register">Crear una cuenta</Link>
+                </label>
+            </div>
+            <ToastContainer />
         </div>
     )
 }
