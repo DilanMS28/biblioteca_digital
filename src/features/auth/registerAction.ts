@@ -1,11 +1,9 @@
 "use server";
-
-import { RegisterUserSchema } from "@/Schemas/AuthSchema";
+import { RegisterUserType } from "@/Schemas/AuthSchema";
 import { createClient } from "@/lib/supabase/server";
-import { id } from "zod/locales";
 
-export async function registerAction(formData: RegisterUserSchema) {
-    const data = RegisterUserSchema.parse({
+export async function registerAction(formData: RegisterUserType) {
+    const data = RegisterUserType.parse({
         email: formData.email,
         password: formData.password,
         name: formData.name,
