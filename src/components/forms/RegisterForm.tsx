@@ -2,16 +2,15 @@
 import { registerAction } from "@/features/auth/registerAction";
 import { useForm } from "react-hook-form";
 import ErrorMessage from "../ui/ErrorMessage";
-import { RegisterUserSchema } from "@/Schemas/AuthSchema";
+import { RegisterUserType } from "@/Schemas/AuthSchema";
 import { toast, ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
 
 
 export default function RegisterForm() {
-    const router = useRouter();
-    const { register, handleSubmit, formState: {errors}, reset } = useForm<RegisterUserSchema>();
+    const { register, handleSubmit, formState: {errors}, reset } = useForm<RegisterUserType>();
 
-    const registerLogin = async (data: RegisterUserSchema) => {
+    const registerLogin = async (data: RegisterUserType) => {
         
         const result = await registerAction(data);
 

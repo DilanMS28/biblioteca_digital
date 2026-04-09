@@ -1,8 +1,29 @@
+'use client'
 import Link from "next/link";
-import { ToastContainer } from "react-toastify";
+import { useForm } from "react-hook-form";
+import { toast, ToastContainer } from "react-toastify";
+import ErrorMessage from "../ui/ErrorMessage";
+import { SignInUserType } from "@/Schemas/AuthSchema";
+import { loginAction } from "@/features/auth/loginAction";
+import { redirect } from "next/dist/server/api-utils";
+import { useRouter } from "next/navigation";
 
 
 export default function LoginForm() {
+    const router = useRouter()
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<SignInUserType>();
+
+    const SignInlogin = async (data: SignInUserType) => {
+        const result = await loginAction(data);
+        if(result?.success){
+            toast.success("Inicio de Sesión Exitoso")
+        }else {
+            toast.error(result?.message)
+        }
+        reset();
+        router.push("/")
+    }
+
     return (
         <div className="w-full m-8">
 
@@ -12,46 +33,82 @@ export default function LoginForm() {
             </div>
 
             {/* Select Role */}
-            <form action="">
+            <form onSubmit={handleSubmit(SignInlogin)}>
                 <div className="mb-6">
                     <label className="text-xs font-semibold text-gray-500 mb-2 block uppercase tracking-wider">Seleccionar Rol</label>
                     <div className="flex gap-3">
                         <label className="flex-1 cursor-pointer">
-                            <input type="radio" name="role" value="estudiante" defaultChecked className="hidden peer" />
+                            <input
+                                type="radio"
+                                value="student"
+                                {...register("role", { required: "Selecciona un rol" })}
+                                defaultChecked
+                                className="hidden peer"
+                            />
                             <div className="border-2 border-gray-200 text-gray-600 font-semibold rounded-xl px-4 py-2 flex flex-col items-center gap-1 bg-gray-50 hover:border-blue-400 peer-checked:border-blue-400 peer-checked:bg-blue-50 transition">
                                 <i className="bi bi-mortarboard-fill text-xl mb-1"></i>
                                 Estudiante
                             </div>
                         </label>
                         <label className="flex-1 cursor-pointer">
-                            <input type="radio" name="role" value="profesor" className="hidden peer" />
+                            <input
+                                type="radio"
+                                value="teacher"
+                                {...register("role", { required: "Selecciona un rol" })}
+                                className="hidden peer"
+                            />
                             <div className="border-2 border-gray-200 text-gray-600 font-semibold rounded-xl px-4 py-2 flex flex-col items-center gap-1 bg-gray-50 hover:border-blue-400 peer-checked:border-blue-400 peer-checked:bg-blue-50 transition">
                                 <i className="bi bi-person-badge text-xl mb-1"></i>
                                 Profesor
                             </div>
                         </label>
-
                         <label className="flex-1 cursor-pointer">
-                            <input type="radio" name="role" value="admin" className="hidden peer" />
+                            <input
+                                type="radio"
+                                value="admin"
+                                {...register("role", { required: "Selecciona un rol" })}
+                                className="hidden peer"
+                            />
                             <div className="border-2 border-gray-200 text-gray-600 font-semibold rounded-xl px-4 py-2 flex flex-col items-center gap-1 bg-gray-50 hover:border-blue-400 peer-checked:border-blue-400 peer-checked:bg-blue-50 transition">
                                 <i className="bi bi-shield-lock text-xl mb-1"></i>
                                 Admin
                             </div>
                         </label>
                     </div>
+                    {errors.role?.message && (<ErrorMessage>{String(errors.role.message)}</ErrorMessage>)}
                 </div>
 
                 <div className="flex flex-col gap-4 mb-3">
                     <div className="relative">
                         <label className="text-xs font-semibold text-gray-500 mb-2 block uppercase tracking-wider">Ingresar usuario</label>
-                        <input type="email" placeholder="Email Address" className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:border-blue-400 placeholder-gray-400" />
-                        {/* <i className="bi bi-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i> */}
+                        <input
+                            type="email"
+                            placeholder="Email Address"
+                            {...register("email", {
+                                required: "El correo institucional es obligatorio",
+                                pattern: {
+                                    value: /^[a-zA-Z0-9._%+-]+@(?:alumnos\.)?ctpc\.edu\.mx$/,
+                                    message: "Debe ser un correo institucional válido (ejemplo: usuario@ctpc.edu.mx o usuario@alumnos.ctpc.edu.mx)"
+                                }
+                            })}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:border-blue-400 placeholder-gray-400" />
+                        {errors.email?.message && (<ErrorMessage>{String(errors.email.message)}</ErrorMessage>)}
                     </div>
 
                     <div className="relative">
                         <label className="text-xs font-semibold text-gray-500 mb-2 block uppercase tracking-wider">Ingresar Contraseña</label>
-                        <input type="password" placeholder="Password" className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:border-sky-400 placeholder-gray-400" />
-                        {/* <i className="bi bi-eye-slash absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer"></i> */}
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            {...register("password", {
+                                required: "La contraseña es obligatoria",
+                                minLength: {
+                                    value: 8,
+                                    message: "La contraseña debe tener al menos 8 caracteres"
+                                }
+                            })}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:border-sky-400 placeholder-gray-400" />
+                        {errors.password?.message && (<ErrorMessage>{String(errors.password.message)}</ErrorMessage>)}
                     </div>
                 </div>
 
@@ -61,7 +118,7 @@ export default function LoginForm() {
                 </div>
 
 
-                <button type="button" className=" cursor-pointer w-full bg-blue-400 hover:bg-blue-500 transition text-white font-bold py-3 rounded-xl mb-5 shadow-md text-lg">
+                <button type="submit" className=" cursor-pointer w-full bg-blue-400 hover:bg-blue-500 transition text-white font-bold py-3 rounded-xl mb-5 shadow-md text-lg">
                     Iniciar Sesión
                 </button>
 
