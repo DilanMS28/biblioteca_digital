@@ -42,7 +42,7 @@ export default function RegisterForm() {
                                 placeholder="Nombre"
                                 {...register("name", { required: "El nombre es obligatorio" })}
                                 className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:border-blue-400 placeholder-gray-400" />
-                                {errors.name?.message && (<ErrorMessage>{String(errors.name.message)}</ErrorMessage>)}
+                                {errors.name?.message && <ErrorMessage>{errors.name.message}</ErrorMessage>}
                         </div>
 
                         <div className="relative">
@@ -52,7 +52,7 @@ export default function RegisterForm() {
                                 placeholder="Apellidos"
                                 {...register("lastNames", { required: "Los apellidos son obligatorios" })}
                                 className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:border-blue-400 placeholder-gray-400" />
-                                {errors.lastNames?.message && (<ErrorMessage>{String(errors.lastNames.message)}</ErrorMessage>)}
+                                {errors.lastNames?.message && <ErrorMessage>{errors.lastNames.message}</ErrorMessage>}
                         </div>
                     </div>
 
@@ -69,7 +69,7 @@ export default function RegisterForm() {
                                 }
                             })}
                             className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:border-blue-400 placeholder-gray-400" />
-                            {errors.email?.message && (<ErrorMessage>{String(errors.email.message)}</ErrorMessage>)}
+                            {errors.email?.message && <ErrorMessage>{errors.email.message}</ErrorMessage>}
                     </div>
 
                     <div className="relative">
@@ -95,7 +95,7 @@ export default function RegisterForm() {
                                 }
                             })}
                             className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:border-sky-400 placeholder-gray-400" />
-                            {errors.password?.message && (<ErrorMessage>{String(errors.password.message)}</ErrorMessage>)}
+                            {errors.password?.message && <ErrorMessage>{errors.password.message}</ErrorMessage>}
                     </div>
                 </div>
 
