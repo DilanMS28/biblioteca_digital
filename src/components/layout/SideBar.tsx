@@ -16,7 +16,7 @@ export default function SideBar() {
     ]
 
     return (
-        <aside className={`max-w-[400px] transition-all duration-300 md:w-[260px] ${sideBarOpen ? 'w-[180px]' : 'w-[60px]'} py-4 px-2`}>
+        <aside className={`max-w-[400px] transition-all duration-300 md:w-[260px] ${sideBarOpen ? 'w-[200px]' : 'w-[60px]'} py-4 px-2`}>
             <div className="my-4 text-center">
                 <h2 className="font-bold text-xl text-blue-400 hidden sm:block"> Panel Administrador</h2>
                 <button
