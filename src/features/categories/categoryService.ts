@@ -11,3 +11,13 @@ export async function createCategory(category: DraftCategoryType) {
 
   return data;
 }
+
+export async function getCategories() {
+  const supabase = await createClient();
+
+  const {data, error} = await supabase.from("categories").select("*").order("id", {ascending: false});
+
+  if(error) throw new Error(error.message);
+
+  return data;
+}

@@ -4,8 +4,10 @@ import { DraftCategoryType } from '@/Schemas/CategorySchema';
 import { useForm } from 'react-hook-form';
 import { createCategoryAction } from '../categoryAction';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 export default function CategoryForm() {
+    const router = useRouter();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<DraftCategoryType>();
 
     const handleSubmitCategories = async (data: DraftCategoryType) => {
@@ -17,6 +19,8 @@ export default function CategoryForm() {
             toast.success("Categoría Agregada Correctamente")
         }
         reset();
+        router.refresh();
+        router.push("/admin/categories")
     }
 
     return (
