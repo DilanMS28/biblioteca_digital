@@ -2,25 +2,59 @@
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import { DraftCategoryType } from '@/Schemas/CategorySchema';
 import { useForm } from 'react-hook-form';
-import { createCategoryAction } from '../categoryAction';
+import { createCategoryAction, getCategorieByIdAction, updateCategoryAction } from '../categoryAction';
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function CategoryForm() {
     const router = useRouter();
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<DraftCategoryType>();
+    const params = useParams();
+    const categorieId = params.id as string;
+
+    useEffect(() => {
+        async function getCategorieById() {
+            if (categorieId) {
+                const result = await getCategorieByIdAction(categorieId);
+                if (result.success) {
+                    setValue("name", result.data.name);
+                    setValue("description", result.data.description);
+                } else {
+                    toast.error(result.message || "Error al Obtener la Categoría")
+                }
+            }
+        }
+        getCategorieById();
+    }, [categorieId]);
+
+    const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<DraftCategoryType>();
+
 
     const handleSubmitCategories = async (data: DraftCategoryType) => {
-        const result = await createCategoryAction(data);
-        
-        if(result?.message) {
-            toast.error(result.message || "Error al Agregar Categoría")
-        }else{
-            toast.success("Categoría Agregada Correctamente")
+        let result;
+
+        if (categorieId) {
+            result = await updateCategoryAction(categorieId, data);
+            if (result?.message) {
+                toast.error(result.message || "Error al Actualizar Categoría")
+            } else {
+                toast.success("Categoría Actualizada Correctamente")
+            }
+        } else {
+            result = await createCategoryAction(data);
+            if (result?.message) {
+                toast.error(result.message || "Error al Agregar Categoría")
+            } else {
+                toast.success("Categoría Agregada Correctamente")
+            }
+
         }
+
         reset();
-        router.refresh();
-        router.push("/admin/categories")
+        setTimeout(() => {
+            router.refresh();
+            router.push("/admin/categories");
+        }, 2000);//espera 2s antes de refrescar para dar tiempo a la notificación toast
     }
 
     return (

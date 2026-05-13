@@ -2,6 +2,7 @@
 import { CategoryType } from '@/Schemas/CategorySchema'
 import { formatDate } from '@/utils'
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material'
+import Link from 'next/link'
 
 export default function CategoryList({ categories }: { categories: CategoryType[] }) {
 
@@ -45,11 +46,14 @@ export default function CategoryList({ categories }: { categories: CategoryType[
                                 <TableCell sx={{ color: "#45556c", fontSize: 15 }}>
                                     <div className="flex gap-8 mr-4">
 
-                                        <a href={`/admin/categories/edit/${category.id}`} title="Editar categoría" className="text-blue-500 hover:text-blue-700 transition">
-                                            <i className="bi  bi-pencil-fill text-2xl text-slate-400 hover:text-violet-500 cursor-pointer"></i>
-                                        </a>
-
-
+                                        <Link
+                                            href={`/admin/categories/edit/${category.id}`}
+                                            title="Editar categoría"
+                                            className="text-blue-500 hover:text-blue-700 transition"
+                                        >
+                                            <i className="bi bi-pencil-fill text-2xl text-slate-400 hover:text-violet-500 cursor-pointer"></i>
+                                        </Link>
+                                       
                                         <button
                                             // onClick={() => {
                                             //     // Captura el ID para eliminación, puedes manejar lógica aquí o con un handler externo
