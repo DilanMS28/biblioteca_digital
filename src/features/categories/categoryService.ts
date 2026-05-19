@@ -46,3 +46,13 @@ export async function updateCategory(id: string, category: DraftCategoryType) {
 
   return { success: true, message: "Categoría actualizada correctamente" };
 }
+
+export async function deleteCategory(id: string){
+  const supabase = await createClient();
+
+  const {error} = await supabase.from("categories").delete().eq("id", id);
+
+  if(error) throw new Error(error.message);
+
+  return { success: true, message: "Categoría Eliminada correctamente" };
+}

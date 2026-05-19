@@ -3,8 +3,17 @@ import { CategoryType } from '@/Schemas/CategorySchema'
 import { formatDate } from '@/utils'
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material'
 import Link from 'next/link'
+import { deleteCategoryAction } from '../categoryAction'
+import { toast, ToastContainer } from 'react-toastify'
+import { useRouter } from 'next/navigation'
 
-export default function CategoryList({ categories }: { categories: CategoryType[] }) {
+type CategoryListType = {
+    categories: CategoryType[],
+    onDelete: (id: number) => void
+}
+
+export default function CategoryList({ categories, onDelete }: CategoryListType) {
+    const router = useRouter();
 
     const columns = [
         { name: "Tag" },
@@ -14,7 +23,23 @@ export default function CategoryList({ categories }: { categories: CategoryType[
         { name: "Acciones" },
     ]
 
+    const handleDelete = async (id: number) => {
+        const confirmed = confirm("¿Desear Eliminar Esta Categoría?");
+
+        if(!confirmed) return;
+
+        const result = await deleteCategoryAction(id.toString());
+
+        if(result?.message){
+            toast.error(result.message || "Error al Eliminar la Categoría");
+        }
+
+        toast.success("Categoría Eliminada Correctamente");
+        onDelete(id);
+    }
+
     return (
+        <>
         <Paper sx={{ width: '100%', overflow: 'hidden', background: "none", boxShadow: "none" }}>
             <TableContainer sx={{maxHeight: 900}} className='my-4 border border-gray-300 rounded-2xl'>
                 <Table sx={{ minWidth: 650 }} stickyHeader aria-label="Tabla de Categorías" className='bg-white'>
@@ -55,15 +80,7 @@ export default function CategoryList({ categories }: { categories: CategoryType[
                                         </Link>
                                        
                                         <button
-                                            // onClick={() => {
-                                            //     // Captura el ID para eliminación, puedes manejar lógica aquí o con un handler externo
-                                            //     if (confirm("¿Estás seguro que deseas eliminar esta categoría?")) {
-                                            //         // Aquí puedes despachar acción, llamar función, o navegar, según preferencia
-                                            //         // Ejemplo: deleteCategory(category.id)
-                                            //         // Por ahora solo imprime el id:
-                                            //         // console.log("Eliminar ID:", category.id);
-                                            //     }
-                                            // }}
+                                            onClick={() => handleDelete(category.id)}
                                             title="Eliminar Categoría"
                                             className="text-red-500 hover:text-red-700 transition"
                                         >
@@ -88,5 +105,7 @@ export default function CategoryList({ categories }: { categories: CategoryType[
                 onRowsPerPageChange={()=>{""}}
             />
         </Paper>
+        <ToastContainer />
+        </>
     )
 }

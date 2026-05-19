@@ -1,6 +1,8 @@
 //Conectar con el frontend
-import { CategoryType, DraftCategoryType } from "@/Schemas/CategorySchema";
-import { createCategory, getCategorieById, updateCategory } from "./categoryService";
+'use server'
+import { DraftCategoryType } from "@/Schemas/CategorySchema";
+import { createCategory, deleteCategory, getCategorieById, updateCategory } from "./categoryService";
+import { revalidatePath } from "next/cache";
 
 export async function updateCategoryAction(id: string, formData: DraftCategoryType) {
   const data = {
@@ -44,4 +46,20 @@ export async function getCategorieByIdAction(id: string) {
     return { success: false, message: "Ocurrió un Error al Obtener la Categoría" };
   }
 
+}
+
+export async function deleteCategoryAction(id: string) {
+  try{
+
+    if (!id) {
+      return { sucess: false, message: "Categoría No Encontrada" };
+    }
+
+    await deleteCategory(id);
+    revalidatePath("/admin/categories")
+    return { success: true};
+
+  } catch (error: any) {
+    return { success: false, message: "Ocurrió un Error al Obtener la Categoría" };
+  }
 }

@@ -18,10 +18,16 @@ export default function Page() {
     fetchCategories();
   }, []);
 
+  //filtrar las categorias
   const filteredCategories = categories.filter((categorie) =>
     (categorie.name?.toLowerCase() ?? "").includes(search.toLowerCase()) ||
     (categorie.description?.toLowerCase() ?? "").includes(search.toLowerCase())
   );
+
+  //eliminar categoria(id)
+  function onDelete(id: number) {
+    setCategories((prevCategories) => prevCategories.filter(category => category.id !== id));
+  }
 
   return (
     <>
@@ -50,7 +56,7 @@ export default function Page() {
         />
       </div>
 
-      <CategoryList categories={filteredCategories} />
+      <CategoryList categories={filteredCategories} onDelete={onDelete} />
     </>
   );
 }

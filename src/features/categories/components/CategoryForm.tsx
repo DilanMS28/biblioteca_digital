@@ -83,7 +83,7 @@ export default function CategoryForm() {
 
             <div className="flex gap-4">
                 <button type="submit" className="w-full bg-blue-400 hover:bg-blue-500 transition text-white font-bold py-3 rounded-4xl mb-5 shadow-md text-lg cursor-pointer" >
-                    Agregar Categoría
+                    {categorieId ? "Actualizar Categoría" : "Agregar Categoría"}
                 </button>
 
                 <button
